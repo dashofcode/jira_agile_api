@@ -6,7 +6,7 @@ module JiraAgileApi
       attribute :client
 
       attribute :statFieldId, String
-      attribute :statFieldValue, Double
+      attribute :statFieldValue, Float
       attribute :statFieldText, String
     end
   end

@@ -36,22 +36,17 @@ describe JiraAgileApi::Client do
     end
   end
 
-  # describe '.project' do
-  #   let(:pt_user) { PT_USER_1 }
-  #   let(:client) { JiraAgileApi::Client.new token: pt_user[:token] }
-  #   let(:project_id) { pt_user[:project_id] }
-  #
-  #   it 'gets a project by id' do
-  #     VCR.use_cassette('get project', record: :new_episodes) do
-  #       project = client.project(project_id)
-  #
-  #       project.must_be_instance_of JiraAgileApi::Resources::Project
-  #       project.id.must_equal project_id
-  #
-  #       project.account.must_be_nil
-  #       project.account_id.wont_be_nil
-  #     end
-  #   end
-  # end
+  describe 'rapid_view' do
+    let(:client) { JiraAgileApi::Client.new url: JIRA_URL, username: JIRA_USERNAME, password: JIRA_PASSWORD }
+    let(:rapid_view_id) { 1 }
 
+    it 'get a rapid view by id' do
+      VCR.use_cassette('get rapid view', record: :new_episodes) do
+        rapid_view = client.rapid_view(rapid_view_id)
+
+        rapid_view.must_be_instance_of JiraAgileApi::Resources::RapidView
+        rapid_view.id.must_equal rapid_view_id
+      end
+    end
+  end
 end

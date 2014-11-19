@@ -21,9 +21,10 @@ module JiraAgileApi
 
   module Endpoints
     autoload :RapidViews, 'jira_agile_api/endpoints/rapid_views'
+    autoload :RapidView, 'jira_agile_api/endpoints/rapid_view'
     # autoload :Epic, 'jira_agile_api/endpoints/epic'
     # autoload :Epics, 'jira_agile_api/endpoints/epics'
-    # autoload :Iterations, 'jira_agile_api/endpoints/iterations'
+    autoload :Sprints, 'jira_agile_api/endpoints/sprints'
     # autoload :Me, 'jira_agile_api/endpoints/me'
     # autoload :Memberships, 'jira_agile_api/endpoints/memberships'
     # autoload :Project, 'jira_agile_api/endpoints/project'
@@ -36,7 +37,7 @@ module JiraAgileApi
   module Resources
     # autoload :Account, 'jira_agile_api/resources/account'
     # autoload :Epic, 'jira_agile_api/resources/epic'
-    # autoload :Sprint, 'jira_agile_api/resources/sprint'
+    autoload :Sprint, 'jira_agile_api/resources/sprint'
     # autoload :Me, 'jira_agile_api/resources/me'
     # autoload :MembershipSummary, 'jira_agile_api/resources/membership_summary'
     # autoload :Label, 'jira_agile_api/resources/label'

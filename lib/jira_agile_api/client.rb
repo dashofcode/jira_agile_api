@@ -105,12 +105,21 @@ module JiraAgileApi
     #   data
     # end
 
-    # Get rapid views
+    # Get all rapid views visible to the session user.
     #
     # @param [Hash] params
     # @return [Array[JiraAgileApi::Resources::RapidView]]
     def rapid_views(params={})
       Endpoints::RapidViews.new(self).get(params)
+    end
+
+    # Get the rapid view with the given ID.
+    #
+    # @param [Fixnum] id Rapid View ID
+    # @param [Hash] params
+    # @return [Array[JiraAgileApi::Resources::RapidView]]
+    def rapid_view(id, params={})
+      Endpoints::RapidView.new(self).get(id, params)
     end
 
     # # Get project
