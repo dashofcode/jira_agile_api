@@ -1,4 +1,4 @@
-module TrackerApi
+module JiraAgileApi
   module Endpoints
     class RapidViews
       attr_accessor :client
@@ -8,10 +8,11 @@ module TrackerApi
       end
 
       def get(params={})
-        data = client.get('/rapidview', params: params)
-        raise TrackerApi::Errors::UnexpectedData, 'Array of rapid views expected' unless data.is_a? Array
+        data  = client.get('/rapidview', params: params).body
+        views = data['views']
+        raise JiraAgileApi::Errors::UnexpectedData, 'Array of rapid views expected' unless views.is_a? Array
 
-        data.map { |rapid_view| Resources::RapidView.new({ client: client }.merge(rapid_view)) }
+        views.map { |rapid_view| Resources::RapidView.new({ client: client }.merge(rapid_view)) }
       end
     end
   end

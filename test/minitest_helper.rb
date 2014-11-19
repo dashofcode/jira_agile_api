@@ -21,4 +21,7 @@ VCR.configure do |c|
   c.allow_http_connections_when_no_cassette = false
 end
 
-LOGGER = ::Logger.new(STDOUT)
+LOGGER        = ::Logger.new(STDOUT)
+JIRA_URL      = ENV['JIRA_URL']
+JIRA_USERNAME = ENV['JIRA_USERNAME']
+JIRA_PASSWORD = ENV['JIRA_PASSWORD']
