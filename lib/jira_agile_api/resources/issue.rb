@@ -18,27 +18,30 @@ module JiraAgileApi
       attribute :assignee, String
       attribute :assigneeName, String
       attribute :avatarUrl, String
-      attribute :colour, String
+      attribute :color, String
       attribute :statusId, String
       attribute :statusName, String
       attribute :statusUrl, String
+      attribute :status, JiraAgileApi::Resources::Status
       attribute :fixVersions, Array[Integer]
       attribute :projectId, Integer
-      attribute :epic, String
+      # attribute :epic, String
+      attribute :epic_key, String
       attribute :estimateStatistic, JiraAgileApi::Resources::EstimateStatistic
+      attribute :hasCustomUserAvatar, Boolean
+      attribute :linkedPagesCount, Integer
 
-      # # @return [String] Comma separated list of labels.
-      # def label_list
-      #   @label_list ||= labels.collect(&:name).join(',')
-      # end
-      #
-      # def tasks(params = {})
-      #   if @tasks.any?
-      #     @tasks
-      #   else
-      #     @tasks = Endpoints::Tasks.new(client).get(project_id, id, params)
-      #   end
-      # end
+
+      # Epic key comes in as "epic" so override setter and store the key
+      def epic=(key)
+        self.epic_key = key
+      end
+
+      def epic
+        # TODO: use epic_key to retrieve epic object
+      end
+
+      # TODO: get issue labels.
     end
   end
 end

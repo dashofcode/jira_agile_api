@@ -18,40 +18,37 @@ describe JiraAgileApi::Resources::RapidView do
   end
 
   describe 'sprints' do
-    it 'can get all sprints for rapid view' do
-      VCR.use_cassette('get sprints', record: :new_episodes) do
+    it 'can get active sprints for rapid view' do
+      VCR.use_cassette('get active sprints', record: :new_episodes) do
         sprints = rapid_view.sprints
 
         sprints.wont_be_empty
 
-        sprint = sprints.first
+        sprint = sprints.last
         sprint.must_be_instance_of JiraAgileApi::Resources::Sprint
+        sprint.state.must_equal 'ACTIVE'
+      end
+    end
+
+    it 'can get all sprints for rapid view' do
+      VCR.use_cassette('get all sprints', record: :new_episodes) do
+        sprints = rapid_view.sprints(include_historic: true, include_future: true)
+
+        sprints.wont_be_empty
+
+        sprint = sprints.last
+        sprint.must_be_instance_of JiraAgileApi::Resources::Sprint
+        sprint.state.must_equal 'FUTURE'
+      end
+    end
+
+    it 'can get the backlog with all sprints and issues' do
+      VCR.use_cassette('get backlog', record: :new_episodes) do
+        backlog = rapid_view.backlog
+
+        backlog.wont_be_empty
+        backlog.must_be_instance_of JiraAgileApi::Resources::Backlog
       end
     end
   end
-
-  # describe '.stories' do
-  #   it 'can get unscheduled stories' do
-  #     VCR.use_cassette('get unscheduled stories', record: :new_episodes) do
-  #       stories = project.stories(with_state: :unscheduled)
-  #
-  #       stories.wont_be_empty
-  #
-  #       story = stories.first
-  #       story.must_be_instance_of TrackerApi::Resources::Story
-  #       story.current_state.must_equal 'unscheduled'
-  #     end
-  #   end
-  #
-  #   it 'can create story' do
-  #     VCR.use_cassette('create story') do
-  #       story = project.create_story(name: 'Test story')
-  #
-  #       story.must_be_instance_of TrackerApi::Resources::Story
-  #       story.id.wont_be_nil
-  #       story.id.must_be :>, 0
-  #       story.name.must_equal 'Test story'
-  #     end
-  #   end
-  # end
 end

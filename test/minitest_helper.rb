@@ -22,6 +22,6 @@ VCR.configure do |c|
 end
 
 LOGGER        = ::Logger.new(STDOUT)
-JIRA_URL      = ENV['JIRA_URL']
-JIRA_USERNAME = ENV['JIRA_USERNAME']
-JIRA_PASSWORD = ENV['JIRA_PASSWORD']
+JIRA_URL      = ENV['JIRA_URL'] || 'http://localhost:8080'
+JIRA_USERNAME = ENV['JIRA_USERNAME'] || 'fcarlisle'
+JIRA_PASSWORD = ENV['JIRA_PASSWORD'] || 'test1234'

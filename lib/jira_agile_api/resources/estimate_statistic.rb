@@ -1,13 +1,25 @@
 module JiraAgileApi
   module Resources
+    class StatFieldValue
+      include Virtus.value_object
+
+      values do
+        attribute :value, Float
+        attribute :text, String
+      end
+    end
+
     class EstimateStatistic
-      include Virtus.model
+      include Virtus.value_object
 
-      attribute :client
+      values do
+        attribute :statFieldId, String
+        attribute :statFieldValue, JiraAgileApi::Resources::StatFieldValue
+      end
 
-      attribute :statFieldId, String
-      attribute :statFieldValue, Float
-      attribute :statFieldText, String
+      def value
+        statFieldValue.value
+      end
     end
   end
 end

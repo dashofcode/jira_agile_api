@@ -20,34 +20,24 @@ module JiraAgileApi
   end
 
   module Endpoints
-    autoload :RapidViews, 'jira_agile_api/endpoints/rapid_views'
+    autoload :Backlog, 'jira_agile_api/endpoints/backlog'
     autoload :RapidView, 'jira_agile_api/endpoints/rapid_view'
-    # autoload :Epic, 'jira_agile_api/endpoints/epic'
-    # autoload :Epics, 'jira_agile_api/endpoints/epics'
+    autoload :RapidViews, 'jira_agile_api/endpoints/rapid_views'
+    autoload :SprintReport, 'jira_agile_api/endpoints/sprint_report'
     autoload :Sprints, 'jira_agile_api/endpoints/sprints'
-    # autoload :Me, 'jira_agile_api/endpoints/me'
-    # autoload :Memberships, 'jira_agile_api/endpoints/memberships'
-    # autoload :Project, 'jira_agile_api/endpoints/project'
-    # autoload :Projects, 'jira_agile_api/endpoints/projects'
-    # autoload :Stories, 'jira_agile_api/endpoints/stories'
-    # autoload :Story, 'jira_agile_api/endpoints/story'
-    # autoload :Tasks, 'jira_agile_api/endpoints/tasks'
   end
 
   module Resources
-    # autoload :Account, 'jira_agile_api/resources/account'
-    # autoload :Epic, 'jira_agile_api/resources/epic'
-    autoload :Sprint, 'jira_agile_api/resources/sprint'
-    # autoload :Me, 'jira_agile_api/resources/me'
-    # autoload :MembershipSummary, 'jira_agile_api/resources/membership_summary'
-    # autoload :Label, 'jira_agile_api/resources/label'
-    # autoload :Person, 'jira_agile_api/resources/person'
-    # autoload :Project, 'jira_agile_api/resources/project'
-    # autoload :ProjectMembership, 'jira_agile_api/resources/project_membership'
-    autoload :RapidView, 'jira_agile_api/resources/rapid_view'
-    autoload :Issue, 'jira_agile_api/resources/issue'
+    autoload :Backlog, 'jira_agile_api/resources/backlog'
+    autoload :Epic, 'jira_agile_api/resources/epic'
     autoload :EstimateStatistic, 'jira_agile_api/resources/estimate_statistic'
-    # autoload :Task, 'jira_agile_api/resources/task'
-    # autoload :TimeZone, 'jira_agile_api/resources/time_zone'
+    autoload :EstimateSum, 'jira_agile_api/resources/estimate_sum'
+    autoload :Issue, 'jira_agile_api/resources/issue'
+    autoload :Project, 'jira_agile_api/resources/project'
+    autoload :RapidView, 'jira_agile_api/resources/rapid_view'
+    autoload :Sprint, 'jira_agile_api/resources/sprint'
+    autoload :SprintReport, 'jira_agile_api/resources/sprint_report'
+    autoload :Status, 'jira_agile_api/resources/status'
+    autoload :Version, 'jira_agile_api/resources/version'
   end
 end

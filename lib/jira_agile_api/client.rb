@@ -24,7 +24,7 @@ module JiraAgileApi
     def initialize(options={})
       url                = options.fetch(:url, 'https://jira.atlassian.com/jira')
       @url               = Addressable::URI.parse(url).to_s
-      @api_version       = options.fetch(:api_version, '/rest/greenhopper/1.0/')
+      @api_version       = options.fetch(:api_version, '/rest/greenhopper/1.0')
       @logger            = options.fetch(:logger, ::Logger.new(nil))
       adapter            = options.fetch(:adapter, :excon)
       connection_options = options.fetch(:connection_options, { ssl: { verify: true } })
@@ -68,43 +68,6 @@ module JiraAgileApi
       request(:post, parse_query_and_convenience_headers(path, options))
     end
 
-    # Make one or more HTTP GET requests, optionally fetching
-    # the next page of results from information passed back in headers
-    # based on value in {#auto_paginate}.
-    #
-    # @param path [String] The path, relative to {#api_endpoint}
-    # @param options [Hash] Query and header params for request
-    # @param block [Block] Block to perform the data concatenation of the
-    #   multiple requests. The block is called with two parameters, the first
-    #   contains the contents of the requests so far and the second parameter
-    #   contains the latest response.
-    # @return [Array]
-    # def paginate(path, options = {}, &block)
-    #   opts           = parse_query_and_convenience_headers path, options.dup
-    #   auto_paginate  = opts[:params].delete(:auto_paginate) { |k| @auto_paginate }
-    #   @last_response = request :get, opts
-    #   data           = @last_response.body
-    #   raise JiraAgileApi::Errors::UnexpectedData, 'Array expected' unless data.is_a? Array
-    #
-    #   if auto_paginate
-    #     pager = Pagination.new @last_response.headers
-    #
-    #     while pager.more?
-    #       opts[:params].update(pager.next_page_params)
-    #
-    #       @last_response = request :get, opts
-    #       pager          = Pagination.new @last_response.headers
-    #       if block_given?
-    #         yield(data, @last_response)
-    #       else
-    #         data.concat(@last_response.body) if @last_response.body.is_a?(Array)
-    #       end
-    #     end
-    #   end
-    #
-    #   data
-    # end
-
     # Get all rapid views visible to the session user.
     #
     # @param [Hash] params
@@ -121,29 +84,6 @@ module JiraAgileApi
     def rapid_view(id, params={})
       Endpoints::RapidView.new(self).get(id, params)
     end
-
-    # # Get project
-    # #
-    # # @param [Hash] params
-    # # @return [JiraAgileApi::Resources::Project]
-    # def project(id, params={})
-    #   Endpoints::Project.new(self).get(id, params)
-    # end
-    #
-    # # Get information about the authenticated user
-    # #
-    # # @return [JiraAgileApi::Resources::Me]
-    # def me
-    #   Endpoints::Me.new(self).get
-    # end
-    #
-    # # Get information about a client story without knowing what project the story belongs to
-    # #
-    # # @param [String] story_id
-    # # @return [JiraAgileApi::Resources::Story]
-    # def story(story_id)
-    #   Endpoints::Story.new(self).get_story(story_id)
-    # end
 
     private
 
@@ -183,39 +123,5 @@ module JiraAgileApi
     rescue Faraday::Error::ClientError => e
       raise JiraAgileApi::Error.new(e)
     end
-
-    # class Pagination
-    #   attr_accessor :headers, :total, :limit, :offset, :returned
-    #
-    #   def initialize(headers)
-    #     @headers  = headers
-    #     @total    = headers['x-tracker-pagination-total'].to_i
-    #     @limit    = headers['x-tracker-pagination-limit'].to_i
-    #     @offset   = headers['x-tracker-pagination-offset'].to_i
-    #     @returned = headers['x-tracker-pagination-returned'].to_i
-    #
-    #     # if offset is negative (e.g. Iterations Endpoint).
-    #     #   For the 'Done' scope, negative numbers can be passed, which
-    #     #   specifies the number of iterations preceding the 'Current' iteration.
-    #     # then need to adjust the negative offset to account for a smaller total,
-    #     #   and set total to zero since we are paginating from -X to 0.
-    #     if @offset < 0
-    #       @offset = -@total if @offset.abs > @total
-    #       @total  = 0
-    #     end
-    #   end
-    #
-    #   def more?
-    #     (offset + limit) < total
-    #   end
-    #
-    #   def next_offset
-    #     offset + limit
-    #   end
-    #
-    #   def next_page_params
-    #     { limit: limit, offset: next_offset }
-    #   end
-    # end
   end
 end
