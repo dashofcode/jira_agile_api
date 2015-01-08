@@ -18,6 +18,7 @@ module JiraAgileApi
       attribute :epicLabel, String
       attribute :epicColour, String
       attribute :epicStats, JiraAgileApi::Resources::Epic::Stats
+      attribute :issues, Array[JiraAgileApi::Resources::Issue], default: []
     end
   end
 end

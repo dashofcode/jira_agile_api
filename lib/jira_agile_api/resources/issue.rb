@@ -25,20 +25,30 @@ module JiraAgileApi
       attribute :status, JiraAgileApi::Resources::Status
       attribute :fixVersions, Array[Integer]
       attribute :projectId, Integer
-      # attribute :epic, String
-      attribute :epic_key, String
       attribute :estimateStatistic, JiraAgileApi::Resources::EstimateStatistic
       attribute :hasCustomUserAvatar, Boolean
       attribute :linkedPagesCount, Integer
 
+      attr_reader :epic, :epic_key
 
-      # Epic key comes in as "epic" so override setter and store the key
-      def epic=(key)
-        self.epic_key = key
+      def initialize(attrs)
+        # Epic key comes in as "epic" so just store the key
+        @epic_key = attrs.delete('epic')
+
+        super(attrs)
+      end
+
+      def epic=(epic)
+        raise ArgumentError, 'Epic not of expected type' unless epic.kind_of? JiraAgileApi::Resources::Epic
+        @epic = epic
       end
 
       def epic
-        # TODO: use epic_key to retrieve epic object
+        return @epic unless @epic.nil?
+
+        if @epic_key
+          # TODO: get epic from key
+        end
       end
 
       # TODO: get issue labels.

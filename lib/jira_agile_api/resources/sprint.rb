@@ -24,6 +24,7 @@ module JiraAgileApi
       attribute :completeDate, DateTime
       attribute :timeRemaining, JiraAgileApi::Resources::Sprint::TimeRemaining
       attribute :issuesIds, Array[Integer]
+      attribute :issues, Array[JiraAgileApi::Resources::Issue], default: []
 
       # Get sprint details.
       #

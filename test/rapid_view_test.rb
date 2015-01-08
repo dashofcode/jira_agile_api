@@ -5,18 +5,6 @@ describe JiraAgileApi::Resources::RapidView do
   let(:rapid_view_id) { 1 }
   let(:rapid_view) { VCR.use_cassette('get rapid view') { client.rapid_view(rapid_view_id) } }
 
-  describe 'epics' do
-    it 'gets all epics for this project' do
-      VCR.use_cassette('get epics', record: :new_episodes) do
-        # epics = project.epics
-        #
-        # epics.wont_be_empty
-        # epic = epics.first
-        # epic.must_be_instance_of TrackerApi::Resources::Epic
-      end
-    end
-  end
-
   describe 'sprints' do
     it 'can get active sprints for rapid view' do
       VCR.use_cassette('get active sprints', record: :new_episodes) do
@@ -41,12 +29,14 @@ describe JiraAgileApi::Resources::RapidView do
         sprint.state.must_equal 'FUTURE'
       end
     end
+  end
 
-    it 'can get the backlog with all sprints and issues' do
+  describe 'backlog' do
+    it 'can get the backlog for rapid view' do
       VCR.use_cassette('get backlog', record: :new_episodes) do
         backlog = rapid_view.backlog
 
-        backlog.wont_be_empty
+        backlog.wont_be_nil
         backlog.must_be_instance_of JiraAgileApi::Resources::Backlog
       end
     end

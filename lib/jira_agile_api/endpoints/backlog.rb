@@ -11,7 +11,7 @@ module JiraAgileApi
         params = { rapidViewId: rapid_view_id }
         data   = client.get('/xboard/plan/backlog/data', params: params).body
 
-        Resources::Backlog.new({ client: client }.merge(data))
+        Resources::Backlog.new({ client: client, rapid_view_id: rapid_view_id }.merge(data))
       end
     end
   end
