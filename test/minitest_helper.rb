@@ -14,7 +14,7 @@ require 'jira_agile_api'
 Dir[File.expand_path('../{support,shared}/**/*.rb', __FILE__)].each { |f| require f }
 
 VCR.configure do |c|
-  c.ignore_localhost         = true
+  c.ignore_localhost         = false
   c.cassette_library_dir     = File.expand_path('../vcr/cassettes', __FILE__).to_s
   c.default_cassette_options = { serialize_with: :json }
   c.hook_into :excon

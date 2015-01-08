@@ -3,7 +3,7 @@ require_relative 'minitest_helper'
 describe JiraAgileApi::Resources::Backlog do
   let(:client) { JiraAgileApi::Client.new url: JIRA_URL, username: JIRA_USERNAME, password: JIRA_PASSWORD }
   let(:rapid_view_id) { 1 }
-  let(:backlog) { VCR.use_cassette('get backlog') { client.rapid_view(rapid_view_id).backlog } }
+  let(:backlog) { VCR.use_cassette('get backlog', record: :new_episodes) { client.rapid_view(rapid_view_id).backlog } }
 
   it 'can get all the issues in the rapid view' do
     issues = backlog.issues
