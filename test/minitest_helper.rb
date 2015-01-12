@@ -1,7 +1,7 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 
-require 'coveralls'
-Coveralls.wear!
+require 'codeclimate-test-reporter'
+CodeClimate::TestReporter.start
 
 require 'minitest/byebug' if ENV['DEBUG']
 require 'minitest/autorun'
@@ -19,6 +19,7 @@ VCR.configure do |c|
   c.default_cassette_options = { serialize_with: :json }
   c.hook_into :excon
   c.allow_http_connections_when_no_cassette = false
+  c.ignore_hosts 'codeclimate.com'
 end
 
 LOGGER        = ::Logger.new(STDOUT)

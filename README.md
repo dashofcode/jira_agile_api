@@ -2,9 +2,9 @@
 
 [![Gem Version](https://badge.fury.io/rb/jira_agile_api.png)](http://badge.fury.io/rb/jira_agile_api)
 [![Build Status](https://travis-ci.org/dashofcode/jira_agile_api.png?branch=master)](https://travis-ci.org/dashofcode/jira_agile_api)
-[![Code Climate](https://codeclimate.com/github/dashofcode/jira_agile_api.png)](https://codeclimate.com/github/dashofcode/jira_agile_api)
-[![Coverage Status](https://coveralls.io/repos/dashofcode/jira_agile_api/badge.png?branch=master)](https://coveralls.io/r/dashofcode/jira_agile_api?branch=master)
-[![Dependency Status](https://gemnasium.com/dashofcode/jira_agile_api.png)](https://gemnasium.com/dashofcode/jira_agile_api)
+[![Code Climate](https://codeclimate.com/github/dashofcode/jira_agile_api/badges/gpa.svg)](https://codeclimate.com/github/dashofcode/jira_agile_api)
+[![Test Coverage](https://codeclimate.com/github/dashofcode/jira_agile_api/badges/coverage.svg)](https://codeclimate.com/github/dashofcode/jira_agile_api)
+[![Dependency Status](https://gemnasium.com/dashofcode/jira_agile_api.svg)](https://gemnasium.com/dashofcode/jira_agile_api)
 
 This gem allows you to easily use the [Jira Agile API](https://developer.atlassian.com/jiradev/remote-api-reference/jira-rest-apis).
 
