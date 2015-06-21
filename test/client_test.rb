@@ -21,6 +21,26 @@ describe JiraAgileApi::Client do
     client.logger.must_equal LOGGER
   end
 
+  it 'can be configured using oauth' do
+    client = JiraAgileApi::Client.new(url:         'http://test.com',
+                                      api_version: '/foo-bar/1',
+                                      oauth:       {
+                                          consumer_key: 'xxx',
+                                          consumer_secret: 'yyy',
+                                          token: 'zzz',
+                                          token_secret: '123',
+                                          signature_method: 'RSA-SHA1'
+                                      },
+                                      logger:      LOGGER)
+
+    client.url.must_equal 'http://test.com'
+    client.api_version.must_equal '/foo-bar/1'
+    client.username.must_equal nil
+    client.password.must_equal nil
+    client.oauth.must_equal consumer_key: 'xxx', consumer_secret: 'yyy', token: 'zzz', token_secret: '123', signature_method: 'RSA-SHA1'
+    client.logger.must_equal LOGGER
+  end
+
   describe 'rapid_views' do
     let(:client) { JiraAgileApi::Client.new url: JIRA_URL, username: JIRA_USERNAME, password: JIRA_PASSWORD }
 
