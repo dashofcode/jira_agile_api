@@ -5,11 +5,13 @@ module JiraAgileApi
     # Header keys that can be passed in options hash to {#get},{#paginate}
     CONVENIENCE_HEADERS = Set.new([:accept, :content_type])
 
-    attr_reader :url, :api_version, :username, :password, :logger, :connection, :auto_paginate, :last_response
+    attr_reader :url, :api_version, :username, :password, :oauth, :logger, :connection, :auto_paginate, :last_response
 
     # Create Pivotal Tracker API client.
     #
     # @param [Hash] options the connection options
+    # @option options [Hash] :oauth Options are forwarded by Faraday oauth middleware to SimpleOAuth::Header.
+    #   Common options are: :consumer_key, :consumer_secret, :token, :token_secret, :signature_method
     # @option options [String] :username Username to use for Basic Auth
     # @option options [String] :password Password to use for Basic Auth
     # @option options [String] :url Main HTTP API root
@@ -21,6 +23,9 @@ module JiraAgileApi
     #
     # @example Creating a Client
     #   Client.new username: 'sally', password: 'brown'
+    #
+    # @example Creating a Client with oauth parameters
+    #   Client.new oauth: { consumer_key: 'xxx', consumer_secret: 'yyy', token: 'zzz', token_secret: '123', signature_method: 'RSA-SHA1' }
     def initialize(options={})
       url                = options.fetch(:url, 'https://jira.atlassian.com/jira')
       @url               = Addressable::URI.parse(url).to_s
@@ -30,10 +35,18 @@ module JiraAgileApi
       connection_options = options.fetch(:connection_options, { ssl: { verify: true } })
       # @auto_paginate     = options.fetch(:auto_paginate, true)
       # @token             = options[:token]
-      @username          = options[:username]
-      @password          = options[:password]
-      raise 'Missing required option: username' unless @username
-      raise 'Missing required option: password' unless @password
+      @oauth              = options[:oauth]
+      @username           = options[:username]
+      @password           = options[:password]
+
+      if @oauth
+        authentication_options = [:oauth, @oauth]
+      else
+        raise 'Missing required option: username' unless @username
+        raise 'Missing required option: password' unless @password
+
+        authentication_options = [:basic_auth, @username, @password]
+      end
 
       @connection = Faraday.new({ url: @url }.merge(connection_options)) do |builder|
         # response
@@ -43,7 +56,7 @@ module JiraAgileApi
         # request
         builder.request :multipart
         builder.request :json
-        builder.request :basic_auth, @username, @password
+        builder.request *authentication_options
 
         builder.use JiraAgileApi::Logger, @logger
         builder.adapter adapter
